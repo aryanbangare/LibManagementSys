@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LibMinimalApi10.Core\LibMinimalApi10.Core.csproj" />
+    <ProjectReference Include="..\LibMinimalApi10.Persistence\LibMinimalApi10.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

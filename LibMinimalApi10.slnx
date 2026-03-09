@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="LibMinimalApi10.Core/LibMinimalApi10.Core.csproj" Id="c4aa4f9e-20f4-4220-8635-4d9e67bdc5b0" />
+  <Project Path="LibMinimalApi10.Persistence/LibMinimalApi10.Persistence.csproj" Id="075d7744-a3c3-475e-ab04-8db3e7c93a92" />
+  <Project Path="LibMinimalApi10.Service/LibMinimalApi10.Service.csproj" Id="87298a3c-33fe-4043-86f1-639aa677e663" />
+  <Project Path="LibMinimalApi10.Web/LibMinimalApi10.Web.csproj" />
+</Solution>

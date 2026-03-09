@@ -1,4 +1,5 @@
 ﻿using LibMinimalApi10.Core.Dtos;
+using LibMinimalApi10.Core.Request;
 using LibMinimalApi10.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -19,6 +20,7 @@ namespace LibMinimalApi10.Web.Endpoints
             IEndpointRouteBuilder bookGroup = BookEndpoint.MapBookGroup(endpoints);
 
             bookGroup.MapGet("", GetBooks);
+            bookGroup.MapPost("", CreateBooksRequest);
 
             return endpoints;
 
@@ -29,8 +31,13 @@ namespace LibMinimalApi10.Web.Endpoints
             IEnumerable<BooksDto> books = bookService.GetBooksList();
             return TypedResults.Ok(books);
         }
-
-
+        private static IResult CreateBooksRequest(BooksService booksService,CreateBooksRequest request)
+        {
+           var result = booksService.CreateBooksRequest(request);
+            return result is not null
+                ? TypedResults.Ok(result)
+                : TypedResults.BadRequest("Failed to create book.");
+        }
     }
 }
 

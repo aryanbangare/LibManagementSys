@@ -1,5 +1,7 @@
 ﻿using LibMinimalApi10.Core.Dtos;
+using LibMinimalApi10.Core.Request;
 using LibMinimalApi10.Persistence;
+using LibMinimalApi10.Persistence.Data;
 
 namespace LibMinimalApi10.Services
 {
@@ -14,6 +16,27 @@ namespace LibMinimalApi10.Services
         {
             IReadOnlyList<CategoryDto> Category = _dbContext.Category.Select(c => new CategoryDto(c.CategoryId, c.Name)).ToList();
             return Category;
+        }
+
+        public CategoryDto? CreateCategoryRequest(CreateCategoryRequest request)
+        {
+            try
+            {
+                var category = new Category
+                {
+                    Name = request.Name
+                };
+                _dbContext.Category.Add(category);
+                _dbContext.SaveChanges();
+                return new CategoryDto(category.CategoryId, category.Name);
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (you can use a logging framework here)
+                Console.WriteLine($"An error occurred while creating the category: {ex.Message}");
+                return null; // Return null or handle it as per your application's requirements
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using LibMinimalApi10.Core.Dtos;
+using LibMinimalApi10.Core.Request;
 using LibMinimalApi10.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -18,7 +19,7 @@ namespace LibMinimalApi10.Web.Endpoints
             IEndpointRouteBuilder categoryGroup = CategoryEndpoints.MapCategoryGroup(endpoints);
 
             categoryGroup.MapGet("/", GetAllCategory);
-
+            categoryGroup.MapPost("/", CreateCategoryRequest);
             return endpoints;
         }
         private static Ok<IEnumerable<CategoryDto>> GetAllCategory(CategoryService categoryService)
@@ -26,5 +27,14 @@ namespace LibMinimalApi10.Web.Endpoints
             IEnumerable<CategoryDto> category = categoryService.GetCategoryList();
             return TypedResults.Ok(category);
         }
+        private static IResult CreateCategoryRequest(CategoryService categoryService, CreateCategoryRequest request)
+        {
+           if (string.IsNullOrWhiteSpace(request.Name))
+                return TypedResults.BadRequest("Name is required.");
+           var result = categoryService.CreateCategoryRequest(request);
+            return result is not null
+                ? TypedResults.Ok(result)
+                : TypedResults.BadRequest("Failed to create category.");
+        }
     }
-}       
+}

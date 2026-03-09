@@ -11,7 +11,7 @@ namespace LibMinimalApi10.Persistence.Data
 
         public DateOnly IssueDate { get; set; }
         public DateOnly ReturnDate { get; set; }
-        public DateOnly RenewDate { get; set; }
+        public DateOnly? RenewDate { get; set; }
 
     }
 }

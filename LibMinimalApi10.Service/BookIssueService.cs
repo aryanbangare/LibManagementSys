@@ -39,7 +39,6 @@ namespace LibMinimalApi10.Services
                     BookId = request.BookId,
                     IssueDate = request.IssueDate,
                     ReturnDate = request.ReturnDate,
-                    RenewDate = request.RenewDate
                 };
                 _dbContext.BookIssue.Add(bookIssue);
                 _dbContext.SaveChanges();
@@ -49,6 +48,29 @@ namespace LibMinimalApi10.Services
             {
                 // Log the exception (you can use a logging framework here)
                 Console.WriteLine($"An error occurred while creating the book issue: {ex.Message}");
+             }
+               return null; // Return null or handle it as per your application's requirements
+        }
+        public BookIssueDto? PatchBookIssueRequest(int issueId, PatchBookIssueRequest request)
+        {
+            try
+            {
+                var bookIssue = _dbContext.BookIssue.FirstOrDefault(bi => bi.IssueId == issueId);
+                if (bookIssue == null)
+                {
+                    return null; // Book issue not found
+                }
+                if (request.RenewDate.HasValue)
+                {
+                    bookIssue.RenewDate = request.RenewDate.Value;
+                }
+                _dbContext.SaveChanges();
+                return new BookIssueDto(bookIssue.IssueId, bookIssue.MemberId, bookIssue.BookId, bookIssue.IssueDate, bookIssue.ReturnDate, bookIssue.RenewDate);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (you can use a logging framework here)
+                Console.WriteLine($"An error occurred while updating the book issue: {ex.Message}");
                 return null; // Return null or handle it as per your application's requirements
             }
         }

@@ -21,6 +21,7 @@ namespace LibMinimalApi10.Web.Endpoints
 
             issueGroup.MapGet("", GetBooks);
             issueGroup.MapPost("", CreateBookIssueRequest);
+            issueGroup.MapPatch("/{issueId:int}", PatchBookIssueRequest);
             return endpoints;
         }
         public static Ok<IEnumerable<BookIssueDto>> GetBooks(BookIssueService bookIssueService)
@@ -34,6 +35,13 @@ namespace LibMinimalApi10.Web.Endpoints
             return result is not null
                 ? TypedResults.Ok(result)
                 : TypedResults.BadRequest("Failed to create book issue.");
+        }
+        private static IResult PatchBookIssueRequest(BookIssueService bookIssueService, int issueId, PatchBookIssueRequest request)
+        {
+            var result = bookIssueService.PatchBookIssueRequest(issueId, request);
+            return result is not null
+                ? TypedResults.Ok(result)
+                : TypedResults.BadRequest("Failed to update book issue.");
         }
     }
 }

@@ -20,6 +20,8 @@ builder.Services
     .AddScoped<CategoryService>()
     .AddScoped<MemberService>();
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,7 +30,13 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+app.UseCors(option =>
+{
+    option.AllowAnyHeader();
+    option.AllowAnyMethod();
+    option.AllowAnyOrigin();
+});
 
 RouteGroupBuilder ApiGroup = app.MapGroup("api");
 

@@ -17,7 +17,7 @@ namespace LibMinimalApi10.Services
         {
             IReadOnlyList<BookIssueDto> BookIssue = _dbContext.BookIssue
                   .Select
-                  (bi => new BookIssueDto
+                    (bi => new BookIssueDto
                   (
                       bi.IssueId,
                       bi.MemberId,
@@ -37,8 +37,8 @@ namespace LibMinimalApi10.Services
                 {
                     MemberId = request.MemberId,
                     BookId = request.BookId,
-                    IssueDate = request.IssueDate,
-                    ReturnDate = request.ReturnDate,
+                    IssueDate = DateOnly.FromDateTime(DateTime.Today),
+                    ReturnDate = DateOnly.FromDateTime(DateTime.Today).AddDays(30)
                 };
                 _dbContext.BookIssue.Add(bookIssue);
                 _dbContext.SaveChanges();
@@ -48,8 +48,8 @@ namespace LibMinimalApi10.Services
             {
                 // Log the exception (you can use a logging framework here)
                 Console.WriteLine($"An error occurred while creating the book issue: {ex.Message}");
-             }
-               return null; // Return null or handle it as per your application's requirements
+            }
+            return null; // Return null or handle it as per your application's requirements
         }
         public BookIssueDto? PatchBookIssueRequest(int issueId, PatchBookIssueRequest request)
         {

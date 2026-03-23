@@ -38,5 +38,17 @@ namespace LibMinimalApi10.Services
                 return null; // Return null or handle it as per your application's requirements
             }
         }
+
+        public void DeleteCategory(int id)
+        {
+            Category? category = _dbContext.Category.Find(id);
+            if (category is null)
+            {
+                throw new KeyNotFoundException($"Category with id {id} not found.");
+            }
+
+            _dbContext.Category.Remove(category);
+            _dbContext.SaveChanges();
+        }
     }
 }

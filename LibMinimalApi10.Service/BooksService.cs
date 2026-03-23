@@ -33,7 +33,7 @@ namespace LibMinimalApi10.Services
                 _dbContext.SaveChanges();
                 return new BooksDto(book.BookId, book.BookName, book.Publisher, book.Author, book.Price, book.CategoryId);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 // Log the exception (you can use a logging framework here)
                 Console.WriteLine($"An error occurred while creating the category: {ex.Message}");

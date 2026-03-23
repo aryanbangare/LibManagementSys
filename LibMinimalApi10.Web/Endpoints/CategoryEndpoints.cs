@@ -20,6 +20,7 @@ namespace LibMinimalApi10.Web.Endpoints
 
             categoryGroup.MapGet("/", GetAllCategory);
             categoryGroup.MapPost("/", CreateCategoryRequest);
+            categoryGroup.MapDelete("/{id}", DeleteCategory);
             return endpoints;
         }
         private static Ok<IEnumerable<CategoryDto>> GetAllCategory(CategoryService categoryService)
@@ -29,12 +30,25 @@ namespace LibMinimalApi10.Web.Endpoints
         }
         private static IResult CreateCategoryRequest(CategoryService categoryService, CreateCategoryRequest request)
         {
-           if (string.IsNullOrWhiteSpace(request.Name))
+            if (string.IsNullOrWhiteSpace(request.Name))
                 return TypedResults.BadRequest("Name is required.");
-           var result = categoryService.CreateCategoryRequest(request);
+            var result = categoryService.CreateCategoryRequest(request);
             return result is not null
                 ? TypedResults.Ok(result)
                 : TypedResults.BadRequest("Failed to create category.");
+        }
+
+        private static IResult DeleteCategory(CategoryService service, int id)
+        {
+            try
+            {
+                service.DeleteCategory(id);
+                return TypedResults.Ok();
+            }
+            catch (KeyNotFoundException e)
+            {
+                return TypedResults.NotFound();
+            }
         }
     }
 }

@@ -31,9 +31,9 @@ namespace LibMinimalApi10.Web.Endpoints
             IEnumerable<BooksDto> books = bookService.GetBooksList();
             return TypedResults.Ok(books);
         }
-        private static IResult CreateBooksRequest(BooksService booksService,CreateBooksRequest request)
+        private static IResult CreateBooksRequest(BooksService booksService, CreateBooksRequest request)
         {
-           var result = booksService.CreateBooksRequest(request);
+            var result = booksService.CreateBooksRequest(request);
             return result is not null
                 ? TypedResults.Ok(result)
                 : TypedResults.BadRequest("Failed to create book.");

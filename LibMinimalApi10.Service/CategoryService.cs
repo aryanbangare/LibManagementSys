@@ -33,9 +33,9 @@ namespace LibMinimalApi10.Services
             }
             catch (Exception ex)
             {
-                // Log the exception (you can use a logging framework here)
+
                 Console.WriteLine($"An error occurred while creating the category: {ex.Message}");
-                return null; // Return null or handle it as per your application's requirements
+                return null;
             }
         }
 
@@ -49,6 +49,7 @@ namespace LibMinimalApi10.Services
 
             _dbContext.Category.Remove(category);
             _dbContext.SaveChanges();
+
         }
     }
 }
